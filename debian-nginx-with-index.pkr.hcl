@@ -3,7 +3,7 @@ variable "iam_token" {
 }
 
 source "yandex" "debian-nginx" {
-  token               = "$OAUTH_TOKEN"        #from enviroment, .variables.pkrvars.hcl, or clear-text
+  token               = "iam_token"        #from enviroment $OAUTH_TOKEN, .variables.pkrvars.hcl, or clear-text
   folder_id           = "b1g8dggeakajd96af6a4"
   source_image_family = "debian-9"
   ssh_username        = "debian"              #see it from username on actual vmd eployment of this image  
