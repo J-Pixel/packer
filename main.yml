@@ -1,0 +1,28 @@
+---
+- hosts: all
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Install our dependencies and nginx.
+      package: name={{ item }} state=present
+      with_items:
+        - curl
+        - nginx
+        - apt-transport-https
+        - ca-certificates
+        - gnupg2
+    - name: Add Docker apt key.
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+        state: present
+    - name: Add Docker repository.
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/debian buster stable"
+        state: present
+        update_cache: true
+    - name: Install Docker from our new repo.
+      package: name={{ item }} state=present
+      with_items:
+        - docker-ce
+        - docker-ce-cli
