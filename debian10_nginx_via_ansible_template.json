@@ -1,0 +1,23 @@
+{
+    "builders": [
+        {
+            "type": "yandex",
+            "service_account_key_file": "yc_sa.json",
+            "folder_id": "{{user `folder_id`}}",
+            "subnet_id": "{{user `subnet_id`}}",
+            "use_ipv4_nat": "true",
+            "zone": "{{ user `zone`}}",
+            "ssh_username": "debian",
+            "source_image_family": "debian-10",
+            "image_description": "{{user `image_description`}}",
+            "image_name": "{{user `product_name`}}"
+            }
+  ],
+    "provisioners":[
+        {
+            "type": "ansible",
+            "playbook_file": "./main.yml",
+            "user": "image-builder"
+        }
+    ]
+}
